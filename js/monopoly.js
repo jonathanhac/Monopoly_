@@ -2,6 +2,8 @@
     Monopoly.allowRoll = true;
     Monopoly.moneyAtStart = 500;// the player get $500 rather than getting $1000
     Monopoly.doubleCounter = 0;
+    var result1;
+    var result2;
 
     Monopoly.init = function(){
         $(document).ready(function(){
@@ -43,7 +45,7 @@
     };
 
     // this function updating the money of the player
-    // When the player is broke then the it disappears from the game
+    // When the player is broke then the it disapeear from the game
     Monopoly.updatePlayersMoney = function(player,amount){
         var playersMoney = parseInt(player.attr("data-money"));
         playersMoney -= amount;
@@ -52,7 +54,6 @@
             player.remove;
             Monopoly.showPopup("broke")
             console.log('you are broke')
-
 
         }
         player.attr("data-money",playersMoney);
@@ -111,31 +112,30 @@
         }else{
             Monopoly.setNextPlayerTurn();
         }
-    }
+    };
         // this function is setting all the action for the next Player
-    Monopoly.setNextPlayerTurn = function(){
 
        Monopoly.setNextPlayerTurn = function(){
-    var currentPlayerTurn = Monopoly.getCurrentPlayer();
-    var playerId = parseInt(currentPlayerTurn.attr("id").replace("player",""));
-    var nextPlayerId;
+        var currentPlayerTurn = Monopoly.getCurrentPlayer();
+        var playerId = parseInt(currentPlayerTurn.attr("id").replace("player",""));
+        var nextPlayerId;
 
-//if the player has dice pair
-    if(result1==result2){
+    //if the player has dice pair
+       if(result1==result2){
        nextPlayerId = playerId ;
-    }
-    else {
-    nextPlayerId = playerId + 1;
-    }
+        }
+        else {
+        nextPlayerId = playerId + 1;
+        }
 
-    if (nextPlayerId > $(".player").length){
+        if (nextPlayerId > $(".player").length){
         nextPlayerId = 1;
-    }
+        }
 
-    currentPlayerTurn.removeClass("current-turn");
-    var nextPlayer = $(".player#player" + nextPlayerId);
-    nextPlayer.addClass("current-turn");
-    if (nextPlayer.is(".jailed")){
+        currentPlayerTurn.removeClass("current-turn");
+        var nextPlayer = $(".player#player" + nextPlayerId);
+        nextPlayer.addClass("current-turn");
+        if (nextPlayer.is(".jailed")){
         var currentJailTime = parseInt(nextPlayer.attr("data-jail-time"));
         currentJailTime++;
         nextPlayer.attr("data-jail-time",currentJailTime);
@@ -145,11 +145,12 @@
         }
         Monopoly.setNextPlayerTurn();
         return;
-    }
-    Monopoly.closePopup();
-    Monopoly.allowRoll = true;
-};
-    // to buy a property
+        }
+        Monopoly.closePopup();
+        Monopoly.allowRoll = true;
+        };
+
+        // to buy a property
     Monopoly.handleBuyProperty = function(player,propertyCell){
         var propertyCost = Monopoly.calculateProperyCost(propertyCell);
         var popup = Monopoly.getPopup("buy");
@@ -177,7 +178,6 @@
         popup.find("#amount-placeholder").text(currentRent);
         popup.find("button").unbind("click").bind("click",function(){
             var properyOwner = $(".player#"+ properyOwnerId);
-           // console.log(properyOwnerId)
             Monopoly.updatePlayersMoney(player,currentRent);
             Monopoly.updatePlayersMoney(properyOwner,-1*currentRent);
             Monopoly.closeAndNextTurn();
@@ -240,7 +240,7 @@
         player.addClass("jailed");
         player.attr("data-jail-time",1);
         $(".corner.game.cell.in-jail").append(player);
-        Monopoly.playSound("woopwoop");
+        Monopoly.playSound("woopwoop"); // adding a sound when the player goes to jail
         Monopoly.setNextPlayerTurn();
         Monopoly.closePopup();
     };
@@ -302,7 +302,7 @@
 
 
 
-    // the diffrent cases
+    // the different cases
     Monopoly.handleAction = function(player,action,amount){
         console.log(action)
         switch(action){
@@ -364,7 +364,7 @@
         Monopoly.playSound("chaching");
     };
 
-    // when a player is going over the GO cell he will earn $50 more
+    // when a player is going over the GO cell he will earn $50
     Monopoly.handlePassedGo = function(){
         var player = Monopoly.getCurrentPlayer();
         Monopoly.updatePlayersMoney2(player,Monopoly.moneyAtStart/10);
