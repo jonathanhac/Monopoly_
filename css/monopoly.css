@@ -227,7 +227,7 @@ body{
     margin: 4%;
     background-color:#364c9c;
     border-radius: 100px;
-    opacity:0;@
+    opacity:0;
 }
 
 .dice-dot.right{
@@ -240,8 +240,8 @@ body{
     background-position:center;
 }
 
-.smileyface{
+.smileyFace{
     background-image:url(../images/simleyface.jpeg);
     background-size:contain;
     background-position:center;
-}
+};
